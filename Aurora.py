@@ -690,7 +690,7 @@ class Aurora_Webserver(object):
                 or self.manager.current_extension.vid_w == 1
             )
         ):
-            screenshot_path = os.getcwd() + "/webserver/static/img/emptyimage.jpg"
+            screenshot_path = os.getcwd() + "/webserver/static/images/empty.png"
         try:
             f = open(screenshot_path, "rb")
             contents = f.read()
