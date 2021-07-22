@@ -48,6 +48,12 @@
 
         <div class="page-title page-title-fixed">
             <h1 class="font-24"><span><a href="/" class="color-black">Aurora</a></span></h1>
+            <div class="custom-control ios-switch ios-switch-icon" style="margin-right: 50px;top: 2px;">
+                <input data-vibrate="200" type="checkbox" {%if enabled == True %}checked="checked"{% endif %} style="visibility: hidden" class="ios-input" id="toggle_aurora_enabled">
+                <label class="custom-control-label" for="toggle_aurora_enabled"></label>
+                <span>ON</span>
+                <span>OFF</span>
+            </div>
             <a href="/configure/" class="page-title-icon shadow-xl bg-theme color-theme" data-menu=""><i
                     class="fa fa-wrench"></i></a>
             <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i

@@ -113,4 +113,16 @@ function reload_hdmi_image() {
 
 }
 
+function change_system_status() {
+    
+    $('#toggle_aurora_enabled').prop("disabled",true)
+    enabled_stats = $('#toggle_aurora_enabled').prop('checked');
+    
+    data = {"enabled":enabled_stats}
+    system_status_call = make_AJAX_Call("/update_config",data,toast_system_status)
+    
+    $('#toggle_aurora_enabled').prop("disabled",false)
+}
+$('#toggle_aurora_enabled').on('click',function(){ change_system_status() })
+
 

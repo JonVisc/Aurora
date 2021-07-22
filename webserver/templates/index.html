@@ -7,20 +7,6 @@
             <button type="button" class="close color-white opacity-60 font-16" data-vibrate="50" data-dismiss="alert" aria-label="Close">&times;</button>
         </div> 
         {% endif %}
-        
-        <div class="d-flex content">
-            <div class="pt-1">
-                <h5 data-activate="toggle_aurora_enabled" class="font-700 font-14">System Status</h5>
-            </div>
-            <div class="ml-auto mr-4 pr-2">
-                <div class="custom-control ios-switch ios-switch-icon">
-                    <input data-vibrate="200" type="checkbox" {%if enabled == True %}checked="checked"{% endif %} style="visibility: hidden" class="ios-input" id="toggle_aurora_enabled">
-                    <label class="custom-control-label" for="toggle_aurora_enabled"></label>
-                    <span>ON</span>
-                    <span>OFF</span>
-                </div>
-            </div>
-        </div>
 
         <div class="card card-style alert" role="aldddert">
             <div class="d-flex py-2">
