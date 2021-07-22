@@ -21,7 +21,7 @@ class Aurora_AudioSpectogram(AuroraExtension):
         self.columns = 100
         self.gain = 10
         self.low = 10
-        self.high = 2500
+        self.high = 2000
         # Lets find the right device
         self.deviceID = sd.default.device["input"]
 
@@ -30,10 +30,13 @@ class Aurora_AudioSpectogram(AuroraExtension):
         self.delta_f = (self.high - self.low) / (self.columns - 1)
         self.fftsize = math.ceil(self.samplerate / self.delta_f)
         self.low_bin = math.floor(self.low / self.delta_f)
-        self.threshhold = 40
+        self.threshold = 20
 
-        self.pixelCount_nobottom = self.pixelsLeft + self.pixelsRight + self.pixelsTop
-
+        self.pixelCount = self.pixelsLeft + self.pixelsRight + self.pixelsTop
+        # Replace true with a variable that can be added to the index.html page
+        if True:
+            self.pixelCount += self.pixelsBottom
+        
         self.streamstarted = False
         self.noHDMI = True
 
@@ -84,8 +87,8 @@ class Aurora_AudioSpectogram(AuroraExtension):
         return (pos * 3, 0, 255 - pos * 3)
 
     def rainbow_cycle(self, j):
-        for i in range(self.pixelCount_nobottom):
-            rc_index = (i * 256 // self.pixelCount_nobottom) + j
+        for i in range(self.pixelCount):
+            rc_index = (i * 256 // self.pixelCount) + j
             self.pixels[i] = self.wheel(rc_index & 255)
         self.getFrame(False)  # hack to have 'FPS'
         self.pixels.show()
@@ -100,7 +103,7 @@ class Aurora_AudioSpectogram(AuroraExtension):
             for x in magnitude[self.low_bin : self.low_bin + self.columns]:
                 audio_channel_val = int(np.clip(x, 0, 1) * (255))
 
-                if audio_channel_val >= self.threshhold:
+                if audio_channel_val >= self.threshold:
                     audio_channels.append(audio_channel_val)
                 else:
                     audio_channels.append(0)
@@ -109,14 +112,14 @@ class Aurora_AudioSpectogram(AuroraExtension):
             d.rotate(self.pixelsLeft)  # start top left? why not.
             audio_channels = list(d)
 
-            chan_led_width = round(self.pixelCount_nobottom / len(audio_channels))
+            chan_led_width = round(self.pixelCount / len(audio_channels))
 
             for key, val in enumerate(audio_channels):
 
                 first_pixel = key * chan_led_width
                 last_pixel = first_pixel + chan_led_width - 1
-                if last_pixel > self.pixelCount_nobottom:
-                    last_pixel = self.pixelCount_nobottom - 1
+                if last_pixel > self.pixelCount:
+                    last_pixel = self.pixelCount - 1
 
                 for pNum in range(first_pixel, last_pixel + 1):
                     col = self.wheel(pNum)
